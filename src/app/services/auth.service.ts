@@ -21,7 +21,7 @@ export class AuthService {
 
 
 
-  constructor(private afAuth: AngularFireAuth,private router: Router,private panierService: PanierService) {
+  constructor(private afAuth: AngularFireAuth , private router: Router, private panierService: PanierService) {
     this.user$ = afAuth.authState;
     const firebaseConfig = {
       apiKey: "AIzaSyAUOE-13i8UR2HM98vk8lNM_FlWH7-mcn8",
