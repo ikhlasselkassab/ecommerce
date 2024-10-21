@@ -1,0 +1,148 @@
+/* Container for the main content */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 15px;
+}
+
+/* Flexbox for product cards with spacing */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Individual product card */
+.product-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  max-width: 250px; /* Adjust for consistent width */
+  box-sizing: border-box;
+  height: 100%; /* Makes all cards equal height */
+}
+
+/* Hover effect for product cards */
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Product image styling */
+.product-image-wrapper {
+  width: 100%;
+  height: 180px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product title */
+.product-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Product price */
+.product-price {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Product description with flexible height */
+.product-description {
+  color: #7f8c8d;
+  text-align: center;
+  margin: 15px 0;
+  flex-grow: 1;
+  min-height: 60px; /* Ensures all descriptions have a minimum height */
+}
+
+/* Footer with button and stock status */
+.product-footer {
+  text-align: center;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Unified color for all buttons */
+.btn, .add-to-cart-btn {
+  background-color: #2980b9;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover, .add-to-cart-btn:hover {
+  background-color: #3498db;
+}
+
+/* Stock status styling */
+.stock-status {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #27ae60; /* Use color dynamically if needed */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 1.2rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .btn, .add-to-cart-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-price {
+    font-size: 0.9rem;
+  }
+
+  .btn-add-to-cart {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

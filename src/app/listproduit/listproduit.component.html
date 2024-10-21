@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<app-navebar></app-navebar>
+
+<!-- Dropdown for category selection -->
+<div class="container my-3">
+  <label for="categorySelect">Choisissez une catégorie :</label>
+  <select id="categorySelect" class="form-select"  [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">>
+    <option value="">Tous les produits</option>
+    <option *ngFor="let category of categories" [value]="category.slug">
+      {{ category.name }}
+    </option>
+  </select>
+</div>
+
+<!-- Search Bar -->
+<div class="container my-3">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Rechercher un produit"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="filterProduits()"
+  />
+</div>
+
+<!-- List of products -->
+<div class="container">
+  <div class="row">
+    <div *ngFor="let product of filteredProducts" class="col-md-3 mb-4">
+      <app-product-item [product]="product" (addToCart)="addProductToCart(product)"></app-product-item>
+    </div>
+  </div>
+</div>
+
+<!-- Display the cart -->
+<div *ngIf="showCart">
+  <app-panier></app-panier>
+</div>
+
+<!-- Message when no products are available -->
+<ng-template #noProducts>
+  <p>Aucun produit disponible pour cette catégorie.</p>
+</ng-template>

@@ -1,0 +1,19 @@
+.product-details {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.product-details h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.product-details p {
+  font-size: 1rem;
+}
+
+.btn-success {
+  margin-top: 1rem;
+}

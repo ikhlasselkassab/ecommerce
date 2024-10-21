@@ -1,0 +1,75 @@
+<div *ngIf="product" class="product-details container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <img [src]="product.images[0]" alt="{{ product.title }}" class="img-fluid rounded product-image">
+    </div>
+    <div class="col-md-6">
+      <h2 class="text-primary">{{ product.title }}</h2>
+      <p class="text-muted"><strong>Prix : </strong>{{ product.price }} DH</p>
+      <p class="text-warning"><strong>Note : </strong>{{ product.rating }} ⭐</p>
+      <p><strong>Stock : </strong>{{ product.stock }} unités disponibles</p>
+      <p><strong>Catégorie : </strong>{{ product.category }}</p>
+
+      <p><strong>Description:</strong></p>
+      <p>{{ product.description }}</p>
+      <p><strong>Politique de retour:</strong></p>
+      <p>{{ product.returnPolicy }}</p>
+      <button class="btn btn-success" (click)="addToCart(product)">Ajouter au panier</button>
+    </div>
+  </div>
+
+  <!-- Reviews section -->
+  <div class="reviews mt-4">
+    <h5>Avis des Clients</h5>
+    <ul class="list-group">
+      <li *ngFor="let review of product.reviews" class="list-group-item">
+        <strong>{{ review.reviewerName }}:</strong> {{ review.comment }} <br />
+        <span class="text-muted">Note: {{ review.rating }} ⭐ - {{ review.date }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Toggle review form button -->
+  <button class="btn btn-outline-primary mt-3" (click)="toggleReviewForm()">
+    {{ showReviewForm ? 'Masquer' : 'Ajouter Commentaire' }}
+  </button>
+
+  <!-- Add review form (only visible when showReviewForm is true) -->
+  <div *ngIf="showReviewForm" class="review-form mt-4">
+    <h5>Ajouter un Avis</h5>
+    <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+      <div class="form-group">
+        <label for="username">Nom </label>
+        <input type="text" id="username" formControlName="username" class="form-control" placeholder="Votre nom d'utilisateur" required>
+      </div>
+
+      <div class="form-group mt-3">
+        <label for="date">Date</label>
+        <input type="date" id="date" formControlName="date" class="form-control" required>
+      </div>
+
+      <!-- Rating selection inside the form -->
+      <div class="form-group mt-3">
+        <label>Note</label>
+        <div class="rating-input">
+          <!-- Loop to display 5 stars -->
+          <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setNewReviewRating(star)">
+      <i
+        class="star"
+        [ngClass]="{'filled': star <= reviewForm.get('rating')?.value}"
+        style="cursor: pointer;">&#9733;
+      </i>
+    </span>
+        </div>
+      </div>
+
+
+      <div class="form-group mt-3">
+        <label for="comment">Commentaire</label>
+        <textarea id="comment" formControlName="comment" class="form-control" rows="3" placeholder="Votre commentaire" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="reviewForm.invalid">Soumettre l'avis</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="product-card">
+  <h2 class="product-title">{{ product.title }}</h2>
+  <div class="product-image-wrapper">
+    <img [src]="product.images[0]" alt="{{ product.title }}" class="product-image">
+  </div>
+  <p class="product-price">{{ product.price }} DH</p>
+  <p class="product-description">{{ product.description }}</p>
+
+  <!-- Footer for the button and stock message -->
+  <div class="product-footer">
+    <button *ngIf="product.stock" (click)="onAddToCart()" class="btn btn-primary add-to-cart-btn">Ajouter au panier</button>
+    <h5 [ngStyle]="{ color: getColor(product.stock) }">{{ getstate() }}</h5>
+    <a [routerLink]="['/products', product.id]" class="">Voir les détails</a>
+  </div>
+</div>
