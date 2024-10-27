@@ -24,7 +24,7 @@ export class DetailProduitComponent implements OnInit {
   product: any;
   reviewForm!: FormGroup;
   showReviewForm: boolean = false;
-  newReview: Review = new Review('', '', 1);
+
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private panierService: PanierService) {
 
@@ -37,13 +37,11 @@ export class DetailProduitComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Get the product ID from the URL
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
     this.getProductDetails();
   }
 
   getProductDetails(): void {
-    // Use the service to get the product details from the API
     this.productService.getProductById(this.productId).subscribe(
       (response: any) => {
         this.product = response;

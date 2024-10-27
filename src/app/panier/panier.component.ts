@@ -43,24 +43,22 @@ export class PanierComponent implements OnInit {
     return this.panierService.getTotal();
   }
 
-  // Method to handle checkout
   checkout(): void {
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       if (isAuthenticated) {
         console.log('Proceeding to checkout...');
         this.router.navigate(['/checkout']);
       } else {
-        // Redirect to authentication page, preserving the return URL
         this.router.navigate(['/auth'], { queryParams: { returnUrl: '/panier' } });
       }
     });
   }
 
   increaseQuantity(item: any): void {
-    if (item.qte < 99) { // Optional limit to quantity
+    if (item.qte < 99) {
       item.qte++;
     }
-    this.updateCart(); // Update the cart after modification
+    this.updateCart();
   }
   updateCart(): void {
     console.log('Cart updated:', this.cartItems);
@@ -68,14 +66,13 @@ export class PanierComponent implements OnInit {
 
 
   decreaseQuantity(item: any): void {
-    if (item.qte > 1) { // Prevent going below 1
+    if (item.qte > 1) {
       item.qte--;
     }
     this.updateCart();
   }
 
 
-  // Handle logout
   logout() {
     this.authService.logout();
     this.router.navigate(['/auth']);

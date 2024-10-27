@@ -26,9 +26,8 @@ export class CheckoutComponent implements OnInit {
 
 
   confirmOrder() {
-    // Here you can implement your order processing logic (e.g., send the order to the server)
+
     console.log('Order confirmed');
-    // After confirming the order, clear the cart and redirect to success page
     this.panierService.clearCart();
     this.router.navigate(['/order-success']);
   }

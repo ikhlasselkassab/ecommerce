@@ -1,16 +1,12 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
   <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
-    <!-- Titre d'inscription -->
     <h3 class="text-center mb-4">S'inscrire</h3>
-
-    <!-- Message de succès -->
     <div *ngIf="successMessage" class="alert alert-success text-center">
       {{ successMessage }}
     </div>
 
-    <!-- Formulaire d'inscription -->
     <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-      <!-- Champ prénom -->
+
       <div class="form-group mb-3">
         <label for="firstName" class="form-label">Prénom</label>
         <input
@@ -22,7 +18,7 @@
         />
       </div>
 
-      <!-- Champ nom -->
+
       <div class="form-group mb-3">
         <label for="lastName" class="form-label">Nom</label>
         <input
@@ -34,7 +30,6 @@
         />
       </div>
 
-      <!-- Champ email -->
       <div class="form-group mb-3">
         <label for="email" class="form-label">Email</label>
         <input
@@ -46,7 +41,6 @@
         />
       </div>
 
-      <!-- Champ mot de passe -->
       <div class="form-group mb-3">
         <label for="password" class="form-label">Mot de passe</label>
         <input
@@ -58,7 +52,6 @@
         />
       </div>
 
-      <!-- Champ confirmation de mot de passe -->
       <div class="form-group mb-3">
         <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
         <input
@@ -70,12 +63,10 @@
         />
       </div>
 
-      <!-- Message d'erreur pour les mots de passe non concordants -->
       <div *ngIf="!passwordsMatch" class="text-danger mb-3 text-center">
         Les mots de passe ne correspondent pas.
       </div>
 
-      <!-- Bouton d'inscription -->
       <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
       <div class="text-center mt-3">
         <a routerLink="/auth">Vous avez déjà un compte?</a>

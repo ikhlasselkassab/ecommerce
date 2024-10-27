@@ -17,7 +17,7 @@ export class AuthService {
     });
   }
 
-  // Connexion
+
   login(email: string, password: string, returnUrl: string = ''): void {
     console.log('Tentative de connexion...');
     this.afAuth
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
 
-  // Inscription
+
   signUp(email: string, password: string): void {
     this.afAuth.createUserWithEmailAndPassword(email, password)
       .then(result => {
@@ -44,8 +44,6 @@ export class AuthService {
   }
 
 
-
-  // Déconnexion
   logout(): void {
     this.afAuth.signOut().then(() => {
       this.panierService.clearCart();

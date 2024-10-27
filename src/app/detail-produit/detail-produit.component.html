@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- Reviews section -->
+
   <div class="reviews mt-4">
     <h5>Avis des Clients</h5>
     <ul class="list-group">
@@ -30,12 +30,12 @@
     </ul>
   </div>
 
-  <!-- Toggle review form button -->
+
   <button class="btn btn-outline-primary mt-3" (click)="toggleReviewForm()">
     {{ showReviewForm ? 'Masquer' : 'Ajouter Commentaire' }}
   </button>
 
-  <!-- Add review form (only visible when showReviewForm is true) -->
+
   <div *ngIf="showReviewForm" class="review-form mt-4">
     <h5>Ajouter un Avis</h5>
     <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
@@ -49,11 +49,11 @@
         <input type="date" id="date" formControlName="date" class="form-control" required>
       </div>
 
-      <!-- Rating selection inside the form -->
+
       <div class="form-group mt-3">
         <label>Note</label>
         <div class="rating-input">
-          <!-- Loop to display 5 stars -->
+
           <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setNewReviewRating(star)">
       <i
         class="star"

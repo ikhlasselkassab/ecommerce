@@ -36,10 +36,10 @@
 
   <p class="total"><strong>Total : {{ getTotal() }} DH</strong></p>
 
-  <!-- Checkout or login button depending on authentication status -->
+
   <button *ngIf="isAuthenticated$ | async" class="btn btn-primary" (click)="checkout()">Valider mon panier</button>
   <button *ngIf="!(isAuthenticated$ | async)" class="btn btn-warning" (click)="checkout()">Se connecter pour valider</button>
 
-  <!-- Logout button (visible only if authenticated) -->
+
   <button *ngIf="isAuthenticated$ | async" class="btn btn-danger" (click)="logout()">Se déconnecter</button>
 </div>

@@ -31,7 +31,6 @@ export class NavebarComponent implements OnInit {
   @Output() currentPanier : LignePanier[]=[];
   @Output() displayedPanier = new EventEmitter<boolean> ;
   categories : string[]=[];
-  searchKey !: string;
   @Output() searchedText = new EventEmitter<string>();
   totalItems: number= 0;
   private products: any;
@@ -50,7 +49,6 @@ export class NavebarComponent implements OnInit {
       this.totalItems = cartItems.reduce((total, item) => total + item.qte, 0);
     });
 
-    // Récupération des catégories
     this.productService.getCategories()
       .subscribe((response: any) => {
         this.categories = response;
@@ -58,10 +56,10 @@ export class NavebarComponent implements OnInit {
         console.error('Error fetching categories', error);
       });
 
-    // Récupération des produits par catégorie (si c'est nécessaire)
+
     this.productService.getProductBycategory()
       .subscribe((response: any) => {
-        this.products = response; // Assurez-vous que `products` est défini dans votre composant
+        this.products = response;
       }, (error: any) => {
         console.error('Error fetching products', error);
       });
@@ -69,26 +67,11 @@ export class NavebarComponent implements OnInit {
   }
   onLogout(): void {
     this.authService.logout();
-     // Met à jour l'état après la déconnexion
-  }
 
-  showPanier(){
-    this.displayedPanier.emit(true);
   }
-
 
   toggleSearch() {
     this.isSearchActive = !this.isSearchActive;
   }
-
-  onSearchByKey(){
-    console.log(this.searchKey)
-    this.searchedText.emit(this.searchKey)
-
-  }
-
-
-
-
 
 }

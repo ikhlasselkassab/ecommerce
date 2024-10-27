@@ -15,8 +15,6 @@
       <a class="nav-item" *ngIf="!isAuthenticated">
         <a class="nav-link" routerLink="/sign-up">S'inscrire</a>
       </a>
-
-      <!-- Affiche ce bouton si l'utilisateur est authentifié -->
       <a class="nav-item" *ngIf="isAuthenticated">
         <a class="nav-link" (click)="onLogout()">Se déconnecter</a>
       </a>
