@@ -1,72 +1,56 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { PanierService } from './panier.service';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {PanierService} from './panier.service';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-
-import {Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from '@angular/fire/auth';
-import User = firebase.User;
-import {initializeApp} from '@angular/fire/app';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private auth!: Auth;
-  private authenticated = false;
-  user$: Observable<firebase.User | null>;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
+  constructor(private afAuth: AngularFireAuth, private router: Router , private panierService: PanierService) {
+    this.afAuth.authState.subscribe(user => {
+      this.isAuthenticatedSubject.next(!!user);
+    });
+  }
 
-
-
-
-  constructor(private afAuth: AngularFireAuth , private router: Router, private panierService: PanierService) {
-    this.user$ = afAuth.authState;
-    const firebaseConfig = {
-      apiKey: "AIzaSyAUOE-13i8UR2HM98vk8lNM_FlWH7-mcn8",
-      authDomain: "shopapp-16472.firebaseapp.com",
-      projectId: "shopapp-16472",
-      storageBucket: "shopapp-16472.appspot.com",
-      messagingSenderId: "163064975894",
-      appId: "1:163064975894:web:71e829a8c81bb6fbf39b37",
-      measurementId: "G-QTCJCYNKBR"
-    };
-    const app = initializeApp(firebaseConfig);
-    this.auth = getAuth(app);// Observable to track authentication state
+  // Connexion
+  login(email: string, password: string, returnUrl: string = ''): void {
+    console.log('Tentative de connexion...');
+    this.afAuth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.isAuthenticatedSubject.next(true);
+        this.panierService.restoreStoredItems();
+        this.router.navigate([returnUrl || '/']);
+      })
+      .catch((error) => {
+        console.error('Erreur de connexion:', error);
+      });
   }
 
 
-  isAuthenticated(): boolean {
-    return this.authenticated;
-  }
-
-  //logout(): void {
-    //this.authenticated = false;
-    //this.panierService.clearCart()
-    //this.router.navigate(['']);
-  //}
-  signUp(email: string, password: string) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password);
-  }
-
-  // Sign in with email and password
-  signIn(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
-  }
-  signInWithGoogle() {
-    return this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  // Inscription
+  signUp(email: string, password: string): void {
+    this.afAuth.createUserWithEmailAndPassword(email, password)
+      .then(result => {
+        console.log('Utilisateur inscrit avec succès:', result);
+        this.router.navigate(['/auth']); // Redirige vers la page de connexion
+      })
+      .catch(error => console.error('Erreur lors de l\'inscription:', error));
   }
 
 
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+
+  // Déconnexion
+  logout(): void {
+    this.afAuth.signOut().then(() => {
+      this.panierService.clearCart();
+      this.isAuthenticatedSubject.next(false);
+      this.router.navigate(['/']);
+    });
   }
-
-  logout() {
-    return signOut(this.auth);
-  }
-
-
 }
-

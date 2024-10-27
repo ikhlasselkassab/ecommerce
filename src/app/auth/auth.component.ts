@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../services/auth.service';
+import {PanierService} from '../services/panier.service';
 
 
 
@@ -19,27 +20,30 @@ import {AuthService} from '../services/auth.service';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
-export class AuthComponent  {
-  email = new FormControl('');
-  password = new FormControl('');
-  user: any;
+export class AuthComponent implements OnInit {
+  loginForm!: FormGroup;
+  submitted = false;
+  returnUrl: string = '/';
 
-  constructor(private authService: AuthService) {}
-
-  login() {
-    this.authService.login(this.email.value!, this.password.value!)
-      .then(userCredential => {
-        this.user = userCredential.user;
-      })
-      .catch(error => console.error(error));
-  }
-
-  logout() {
-    this.authService.logout().then(() => {
-      this.user = null;
-    });
-  }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+    this.returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/';
+  }
+
+  onLogin(): void {
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password, this.returnUrl);
+    }
   }
 }

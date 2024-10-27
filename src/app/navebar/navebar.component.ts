@@ -36,12 +36,15 @@ export class NavebarComponent implements OnInit {
   totalItems: number= 0;
   private products: any;
   protected isAuthenticated= false;
+
   constructor (private productService : ProductService,private panierService : PanierService,private authService : AuthService) {}
 
 
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
+    this.authService.isAuthenticated$.subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+    });
 
     this.panierService.cartItems$.subscribe(cartItems => {
       this.totalItems = cartItems.reduce((total, item) => total + item.qte, 0);
@@ -66,7 +69,7 @@ export class NavebarComponent implements OnInit {
   }
   onLogout(): void {
     this.authService.logout();
-    this.isAuthenticated = false; // Met à jour l'état après la déconnexion
+     // Met à jour l'état après la déconnexion
   }
 
   showPanier(){

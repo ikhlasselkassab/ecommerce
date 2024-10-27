@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,9 +19,9 @@ import {NgIf} from '@angular/common';
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   passwordsMatch: boolean = true;
-  emailValid: boolean = true;
+  successMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -28,34 +29,22 @@ export class SignupComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', Validators.required]
     });
   }
 
-  onSignup() {
-
-    if (this.signupForm.invalid) {
-      console.log('Formulaire invalide');
-      return;
+  onSignup(): void {
+    if (this.signupForm.valid && this.passwordsMatchValidator()) {
+      const { email, password } = this.signupForm.value;
+      this.authService.signUp(email, password);
+      this.successMessage = 'Inscription réussie ! Veuillez vous connecter.';
     }
+  }
 
+  passwordsMatchValidator(): boolean {
     const password = this.signupForm.get('password')?.value;
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
-
-    if (password !== confirmPassword) {
-      this.passwordsMatch = false;
-      console.log('Les mots de passe ne correspondent pas');
-      return;
-    }
-    const emailControl = this.signupForm.get('email');
-    if (emailControl?.invalid) {
-      this.emailValid = false;
-      console.log('L\'email doit être sous la forme d\'un email valide');
-      return;
-    }
-
-
-    console.log('Formulaire soumis avec succès', this.signupForm.value);
-
+    this.passwordsMatch = password === confirmPassword;
+    return this.passwordsMatch;
   }
 }

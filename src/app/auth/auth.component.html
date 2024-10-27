@@ -1,12 +1,21 @@
-
-<div *ngIf="!user">
-  <h2>Login</h2>
-  <input [formControl]="email" placeholder="Email" />
-  <input [formControl]="password" placeholder="Password" type="password" />
-  <button (click)="login()">Login</button>
-</div>
-
-<div *ngIf="user">
-  <p>Welcome, {{ user.email }}</p>
-  <button (click)="logout()">Logout</button>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h3 class="text-center">Connexion</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email" required>
+        </div>
+        <div class="form-group mt-3">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-control" formControlName="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-4">Se connecter</button>
+        <div class="text-center mt-3">
+          <a routerLink="/sign-up">Pas de compte? Inscrivez-vous ici</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

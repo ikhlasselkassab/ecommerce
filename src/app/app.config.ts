@@ -1,31 +1,43 @@
-import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter, RouterModule} from '@angular/router';
-
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
-import {ProductService} from './services/product.service';
-import {PanierService} from './services/panier.service';
-import {provideClientHydration} from '@angular/platform-browser';
-import {AuthService} from './services/auth.service';
-import {AngularFireModule} from '@angular/fire/compat';
-import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/compat/auth';
-
+import { ProductService } from './services/product.service';
+import { PanierService } from './services/panier.service';
+import { AuthService } from './services/auth.service';
+import { provideClientHydration } from '@angular/platform-browser';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideHttpClient } from '@angular/common/http';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAUOE-13i8UR2HM98vk8lNM_FlWH7-mcn8",
-  authDomain: "shopapp-16472.firebaseapp.com",
-  projectId: "shopapp-16472",
-  storageBucket: "shopapp-16472.appspot.com",
-  messagingSenderId: "163064975894",
-  appId: "1:163064975894:web:71e829a8c81bb6fbf39b37",
-  measurementId: "G-QTCJCYNKBR"
+  apiKey: "AIzaSyA6SaBZOb2TwJcsQVCGz37gayPHMK8kr-E",
+  authDomain: "ecommerce-a40f4.firebaseapp.com",
+  projectId: "ecommerce-a40f4",
+  storageBucket: "ecommerce-a40f4.appspot.com",
+  messagingSenderId: "103656192710",
+  appId: "1:103656192710:web:093834f6bff76633edf5c7"
 };
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),HttpClient,ProductService,PanierService,provideHttpClient(),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(),
+    ProductService,
+    PanierService,
     AuthService,
+
+
     importProvidersFrom(AngularFireModule.initializeApp(firebaseConfig)),
-  importProvidersFrom(AngularFireAuthModule),importProvidersFrom(AngularFireAuth),],
+    importProvidersFrom(AngularFireAuthModule),
 
+
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+  ],
 };
-

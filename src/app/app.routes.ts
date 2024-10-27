@@ -24,7 +24,7 @@ export const routes: Routes = [
 
   {
     path: 'not-found',
-    redirectTo: 'not-found',  // This will cause an infinite redirect
+    redirectTo: 'not-found',
   }
 
 ];

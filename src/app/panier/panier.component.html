@@ -9,7 +9,7 @@
       <th>Quantité</th>
       <th>Prix Unitaire</th>
       <th>Total</th>
-      <th> </th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -18,7 +18,6 @@
         <img [src]="item.product.images[0]" alt="{{ item.product.title }}" class="product-img">
       </td>
       <td>{{ item.product.title }}</td>
-
       <td>
         <div class="quantity-control">
           <button class="btn btn-light" (click)="decreaseQuantity(item)">-</button>
@@ -38,9 +37,9 @@
   <p class="total"><strong>Total : {{ getTotal() }} DH</strong></p>
 
   <!-- Checkout or login button depending on authentication status -->
-  <button *ngIf="isAuthenticated()" class="btn btn-primary" (click)="checkout()">Valider mon panier</button>
-  <button *ngIf="!isAuthenticated()" class="btn btn-warning" (click)="checkout()">Se connecter pour valider</button>
+  <button *ngIf="isAuthenticated$ | async" class="btn btn-primary" (click)="checkout()">Valider mon panier</button>
+  <button *ngIf="!(isAuthenticated$ | async)" class="btn btn-warning" (click)="checkout()">Se connecter pour valider</button>
 
   <!-- Logout button (visible only if authenticated) -->
-  <button *ngIf="isAuthenticated()" class="btn btn-danger" (click)="logout()">Se déconnecter</button>
+  <button *ngIf="isAuthenticated$ | async" class="btn btn-danger" (click)="logout()">Se déconnecter</button>
 </div>
