@@ -10,7 +10,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideHttpClient } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient} from '@angular/common/http';
+import {AuthInterceptorService} from './services/auth-interceptor.service';
 
 
 const firebaseConfig = {
@@ -29,8 +30,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     ProductService,
     PanierService,
-    AuthService,
-
+    AuthService, {
+     provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi:true
+    },
 
     importProvidersFrom(AngularFireModule.initializeApp(firebaseConfig)),
     importProvidersFrom(AngularFireAuthModule),
