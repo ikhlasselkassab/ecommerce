@@ -11,7 +11,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
-  constructor(private afAuth: AngularFireAuth, private router: Router , private panierService: PanierService) {
+
+  constructor(public afAuth: AngularFireAuth, private router: Router , private panierService: PanierService) {
     this.afAuth.authState.subscribe(user => {
       this.isAuthenticatedSubject.next(!!user);
     });
@@ -50,5 +51,11 @@ export class AuthService {
       this.isAuthenticatedSubject.next(false);
       this.router.navigate(['/']);
     });
+  }
+
+
+  async getCurrentUserId(): Promise<string | null> {
+    const user = await this.afAuth.currentUser; // Await the promise to get the current user
+    return user ? user.uid : null; // Return user ID or null if not authenticated
   }
 }

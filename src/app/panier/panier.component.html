@@ -37,9 +37,14 @@
   <p class="total"><strong>Total : {{ getTotal() }} DH</strong></p>
 
 
-  <button *ngIf="isAuthenticated$ | async" class="btn btn-primary" (click)="checkout()">Valider mon panier</button>
-  <button *ngIf="!(isAuthenticated$ | async)" class="btn btn-warning" (click)="checkout()">Se connecter pour valider</button>
+  <button (click)="placeOrder()" [disabled]="cartItems.length === 0" class="btn btn-primary">Passer la commande</button>
+
+  </div>
+
+ <br><br>
+
+
 
 
   <button *ngIf="isAuthenticated$ | async" class="btn btn-danger" (click)="logout()">Se déconnecter</button>
-</div>
+

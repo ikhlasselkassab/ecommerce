@@ -4,7 +4,6 @@ import { routes } from './app.routes';
 import { ProductService } from './services/product.service';
 import { PanierService } from './services/panier.service';
 import { AuthService } from './services/auth.service';
-import { provideClientHydration } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -13,15 +12,21 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import {HTTP_INTERCEPTORS, provideHttpClient} from '@angular/common/http';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
 
+import {Firestore} from '@angular/fire/firestore';
+import {CommandeService} from './services/commande.service';
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6SaBZOb2TwJcsQVCGz37gayPHMK8kr-E",
-  authDomain: "ecommerce-a40f4.firebaseapp.com",
-  projectId: "ecommerce-a40f4",
-  storageBucket: "ecommerce-a40f4.appspot.com",
-  messagingSenderId: "103656192710",
-  appId: "1:103656192710:web:093834f6bff76633edf5c7"
+  apiKey: "AIzaSyDCsKBoykaCo7x4wUIjOHfy6hn-H2Drx5A",
+  authDomain: "ecommerce-94ee6.firebaseapp.com",
+  projectId: "ecommerce-94ee6",
+  storageBucket: "ecommerce-94ee6.firebasestorage.app",
+  messagingSenderId: "109863609675",
+  appId: "1:109863609675:web:5e7b85d1ecc2e64cb7b4ce",
+  measurementId: "G-YBPDS2WL4D"
 };
+
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     ProductService,
     PanierService,
+    CommandeService,
     AuthService, {
      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
@@ -38,6 +44,7 @@ export const appConfig: ApplicationConfig = {
 
     importProvidersFrom(AngularFireModule.initializeApp(firebaseConfig)),
     importProvidersFrom(AngularFireAuthModule),
+    importProvidersFrom(Firestore),
 
 
     provideFirebaseApp(() => initializeApp(firebaseConfig)),

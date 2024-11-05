@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <img ngSrc="Capture_d_écran_2024-10-19_200717-removebg-preview.png" alt="Mon Application" width="100" height="80" class="d-inline-block align-top">
-    <button class="btn btn-outline-secondary me-2" [routerLink]="['']">Produits</button>
+    <a class="navbar-link me-3" [routerLink]="['']">Produits</a>
     <a class="navbar-link me-3" >Categories</a>
     <a class="navbar-link me-3" >A propos</a>
 
@@ -18,6 +18,8 @@
       <a class="nav-item" *ngIf="isAuthenticated">
         <a class="nav-link" (click)="onLogout()">Se déconnecter</a>
       </a>
+      <a class="me-3" routerLink="/commande">🛒 My Orders </a>
+
       <a class="me-3" [routerLink]="['/panier']">  Panier ({{ totalItems }} articles)</a>
     </div>
   </div>

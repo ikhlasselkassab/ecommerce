@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LignePanier } from '../models/LignePanier';
-import { Product } from '../models/Product';
+
+import {Commande} from '../models/Commande';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class PanierService {
 
   private cartItemsSubject = new BehaviorSubject<LignePanier[]>(this.getCartFromLocalStorage());
   cartItems$ = this.cartItemsSubject.asObservable();
+
+  constructor() {}
 
 
   private saveCartToLocalStorage(cartItems: LignePanier[]): void {
@@ -60,4 +64,18 @@ export class PanierService {
   getCartItems(): LignePanier[] {
     return this.cartItemsSubject.value;
   }
+  createCommande(userId: string): Commande {
+    const dateCommande = new Date();
+    const details = this.getCartItems();
+    const montant = this.getTotal();
+
+    const nouvelleCommande = new Commande(userId, dateCommande, details, montant);
+
+    // Optionnel : vider le panier après la création de la commande
+    this.clearCart();
+
+    return nouvelleCommande;
+  }
+
+
 }
