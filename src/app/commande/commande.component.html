@@ -1,0 +1,34 @@
+<app-navebar></app-navebar>
+<div *ngIf="commandes.length > 0; else noCommandes" class="container mt-5">
+  <h2 class="text-center mb-4 title">Vos Commandes</h2>
+  <div *ngFor="let commande of commandes" class="card mb-4 order-card">
+
+    <div class="card-header order-header">
+      <h3 class="card-title mb-0">Commande du {{ date}}</h3>
+    </div>
+    <div class="card-body order-body">
+      <p class="total-amount"><strong>Montant Total :</strong> {{ commande.montant }} DH</p>
+
+      <h4 class="mt-4 item-details-title">Détails des articles</h4>
+      <ul class="list-group list-group-flush item-list">
+        <li *ngFor="let item of commande.items" class="list-group-item item-entry">
+          <p><strong>Produit :</strong> {{ item.productTitle }}</p>
+          <p><strong>Quantité :</strong> {{ item.quantity }}</p>
+          <p><strong>Prix Unitaire :</strong> {{ item.price }} DH</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-footer text-muted text-right footer-info">
+      <small>Commande ID : {{ commande.orderNumber }}</small>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #noCommandes>
+  <div class="container text-center mt-5">
+    <p *ngIf="!userId" class="alert alert-info">Veuillez vous connecter pour voir vos commandes.</p>
+    <p *ngIf="userId && commandes.length === 0" class="alert alert-warning">Aucune commande trouvée.</p>
+  </div>
+</ng-template>
