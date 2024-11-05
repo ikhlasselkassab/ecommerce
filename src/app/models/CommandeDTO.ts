@@ -30,11 +30,11 @@ export class CommandeDTO {
       price: detail.product.price,
     }));
 
-    // Ensure dateCommande is converted to a Timestamp if needed
+
     const dateCommande =
       commande.dateCommande instanceof Date
         ? Timestamp.fromDate(commande.dateCommande)
-        : commande.dateCommande; // Use it directly if already a Timestamp
+        : commande.dateCommande;
 
     return new CommandeDTO(
       commande.userId,
